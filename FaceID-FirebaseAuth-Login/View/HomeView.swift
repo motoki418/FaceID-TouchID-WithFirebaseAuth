@@ -10,7 +10,6 @@ import Firebase
 //H ome page basically show from where the user came from
 // (As a Guest or Logged User)and allows user to disable Face ID & logout from the app
 struct HomeView: View {
-    
     // Log Status
     // ユーザーのログインの有無を管理する
     @AppStorage("log_status") var logStatus: Bool = false

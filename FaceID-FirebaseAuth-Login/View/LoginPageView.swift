@@ -59,35 +59,46 @@ struct LoginPageView: View {
             
             // MARK: User Prompt to ask to store Login using FaceID on next time
             //This will ask the user whether the app can store the login details for future login usin FaceID and allows usersto Login easily without having to type everything again
-            Group{
-                if loginViewModel.useFaceID{
-                    Button{
-                        // MARK: Do FaceID Action
-                        
-                    }label: {
-                        VStack(alignment: .leading, spacing: 10){
-                            Label{
-                                Text("Use FaceID to login into previous account")
-                            }icon: {
-                                Image(systemName: "faceid")
-                            }
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                            
-                            Text("Note: You can turn of it in settings!")
-                                .font(.caption2)
+            // Showing toggle only if the app is allowed to access Biometric Options
+            if loginViewModel.getBioMetricStatus(){
+                Group{
+                    if loginViewModel.useFaceID{
+                        Button{
+                            // MARK: Do FaceID Action
+                            Task{
+                                do{
+                                    try await loginViewModel.authenticateUser()
+                                }catch{
+                                    loginViewModel.errorMsg = error.localizedDescription
+                                    loginViewModel.showError.toggle()
+                                }
+                            }// Task
+                        }label: {
+                            VStack(alignment: .leading, spacing: 10){
+                                Label{
+                                    Text("Use FaceID to login into previous account")
+                                }icon: {
+                                    Image(systemName: "faceid")
+                                }
+                                .font(.caption)
                                 .foregroundColor(.gray)
-                        }// VStack
-                    }// Button
-                    .hLeading()
-                }else{
-                    Toggle(isOn: $useFaceID){
-                        Text("Use FaceID to Login")
+                                
+                                Text("Note: You can turn of it in settings!")
+                                    .font(.caption2)
+                                    .foregroundColor(.gray)
+                            }// VStack
+                        }// Button
+                        .hLeading()
                     }
-                }//  if useFaceID
-            }// Group
-            //.verticalは上下の余白を空ける
-            .padding(.vertical, 20)
+                    else{
+                        Toggle(isOn: $useFaceID){
+                            Text("Use FaceID to Login")
+                        }
+                    }//  if useFaceID
+                }// Group
+                //.verticalは上下の余白を空ける
+                .padding(.vertical, 20)
+            }// if loginViewModel.getBioMetricStatus()
             
             Button{
                 // Task == a unit of asynchronous work
@@ -101,7 +112,7 @@ struct LoginPageView: View {
                         loginViewModel.errorMsg = error.localizedDescription
                         loginViewModel.showError.toggle()
                     }
-                }
+                }// Task
             }label: {
                 Text("Login")
                     .fontWeight(.semibold)
