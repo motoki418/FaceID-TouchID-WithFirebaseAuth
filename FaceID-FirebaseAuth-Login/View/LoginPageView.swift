@@ -12,7 +12,10 @@ struct LoginPageView: View {
     @StateObject private var loginViewModel: LoginViewModel = LoginViewModel()
     
     // MARK: FaceID Properties
-    @AppStorage("use_face_id") var useFaceID: Bool = false
+    // Since we used @AppStorage for FaceID toggle there is a possibility that it can be enabled even if the login is not successful
+    // To avoid that mark it as @State and pass it to loginUser function and toggle the status to true only if the login is successful
+    // 初期値はfalseなので、アプリ起動時は毎回FaceIDLoginがオフになる。
+    @State private var useFaceID: Bool = false
     
     var body: some View {
         VStack{
@@ -38,29 +41,29 @@ struct LoginPageView: View {
                         .fill(
                             loginViewModel.email == "" ? Color.black.opacity(0.05) : Color("Orange")
                         )
-                }// .background
+                }// emailTextField
                 .textInputAutocapitalization(.never)
                 .padding(.top, 20)
-            
-            TextField("password", text: $loginViewModel.email)
+            // SecureField はパスワード入力用のテキストインターフェースを提供する
+            // SecureFieldは入力中のパスワードを非表示にする
+            SecureField("password", text: $loginViewModel.password)
                 .padding()
                 .background{
                     RoundedRectangle(cornerRadius: 8)
                         .fill(
                             loginViewModel.password == "" ? Color.black.opacity(0.05) : Color("Orange")
-                            
                         )
-                    
-                }// .background TextFields
+                }// passwordTextField
                 .textInputAutocapitalization(.never)
                 .padding(.top, 15)
             
             // MARK: User Prompt to ask to store Login using FaceID on next time
             //This will ask the user whether the app can store the login details for future login usin FaceID and allows usersto Login easily without having to type everything again
             Group{
-                if useFaceID{
+                if loginViewModel.useFaceID{
                     Button{
                         // MARK: Do FaceID Action
+                        
                     }label: {
                         VStack(alignment: .leading, spacing: 10){
                             Label{
@@ -87,7 +90,18 @@ struct LoginPageView: View {
             .padding(.vertical, 20)
             
             Button{
-                
+                // Task == a unit of asynchronous work
+                Task{
+                    do{
+                        // ユーザーをログインさせる
+                        try await loginViewModel.loginUser(useFaceID: useFaceID)
+                    }
+                    catch{
+                        // 入力されたメールアドレスが間違っている場合は、エラーメッセージをアラートで表示する
+                        loginViewModel.errorMsg = error.localizedDescription
+                        loginViewModel.showError.toggle()
+                    }
+                }
             }label: {
                 Text("Login")
                     .fontWeight(.semibold)
@@ -115,6 +129,9 @@ struct LoginPageView: View {
         // .horizontalは左右の余白を空ける
         .padding(.horizontal, 25)
         .padding(.vertical)
+        .alert(loginViewModel.errorMsg, isPresented: $loginViewModel.showError){
+            
+        }
     }
 }
 

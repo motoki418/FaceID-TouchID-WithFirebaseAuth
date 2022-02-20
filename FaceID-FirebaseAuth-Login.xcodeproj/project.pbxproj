@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3647D8B127C219890082601A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3647D8B027C219890082601A /* FirebaseAuth */; };
 		3647D8B327C21AE60082601A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647D8B227C21AE60082601A /* LoginViewModel.swift */; };
+		3647D8B527C23F5D0082601A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3647D8B427C23F5D0082601A /* HomeView.swift */; };
 		365F7E7127C2108300BB036F /* FaceID_FirebaseAuth_LoginApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365F7E7027C2108300BB036F /* FaceID_FirebaseAuth_LoginApp.swift */; };
 		365F7E7327C2108300BB036F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365F7E7227C2108300BB036F /* ContentView.swift */; };
 		365F7E7527C2108500BB036F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 365F7E7427C2108500BB036F /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		3647D8B227C21AE60082601A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		3647D8B427C23F5D0082601A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		365F7E6D27C2108300BB036F /* FaceID-FirebaseAuth-Login.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FaceID-FirebaseAuth-Login.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		365F7E7027C2108300BB036F /* FaceID_FirebaseAuth_LoginApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceID_FirebaseAuth_LoginApp.swift; sourceTree = "<group>"; };
 		365F7E7227C2108300BB036F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				365F7E8527C2153000BB036F /* LoginPageView.swift */,
+				3647D8B427C23F5D0082601A /* HomeView.swift */,
 				365F7E7227C2108300BB036F /* ContentView.swift */,
 			);
 			path = View;
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3647D8B527C23F5D0082601A /* HomeView.swift in Sources */,
 				3647D8B327C21AE60082601A /* LoginViewModel.swift in Sources */,
 				365F7E7327C2108300BB036F /* ContentView.swift in Sources */,
 				365F7E7127C2108300BB036F /* FaceID_FirebaseAuth_LoginApp.swift in Sources */,

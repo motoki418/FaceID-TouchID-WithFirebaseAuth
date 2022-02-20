@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    // Log Status
+    // ユーザーのログインの有無を管理する
+    @AppStorage("log_status") var logStatus: Bool = false
+    
     var body: some View {
-        LoginPageView()
+        NavigationView{
+            // Now lets do a simple check in ContentView.
+            // Which will evaluate if the user is already logged in then redirect them to Home Page other wise simply show the Login Screen
+            if logStatus{
+                HomeView()
+            }else{
+                LoginPageView()
+                    .navigationBarHidden(true)
+            }
+        }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
